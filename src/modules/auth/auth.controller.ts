@@ -33,7 +33,31 @@ const signUp = async (req: Request, res: Response) => {
 
 // signIn user
 const signIn = async (req: Request, res: Response) => {
+    const { email, password } = req.body
 
+    try {
+        const result = await authServices.signIn(email, password)
+
+        if (result) {
+            res.status(200).json({
+                success: true,
+                message: "Login successful",
+                data: result
+            });
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "Invalid credentials"
+            });
+        }
+
+    } catch (error: any) {
+        console.log(error.message);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
 }
 
 
