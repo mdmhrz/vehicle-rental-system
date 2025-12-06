@@ -5,8 +5,8 @@ const router = Router();
 
 
 router.get('/', userControllers.getUser);
-router.put('/:id', userControllers.updateUser);
-router.delete('/:id', userControllers.deleteUser)
+router.put('/:userId', userControllers.updateUser);
+router.delete('/:userId', userControllers.deleteUser)
 
 
 
