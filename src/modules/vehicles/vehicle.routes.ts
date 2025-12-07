@@ -6,9 +6,9 @@ const router = Router();
 
 router.post('/', vehicleControllers.createVehicle)
 router.get('/', vehicleControllers.getVehicle);
-router.get('/:id', vehicleControllers.getSingleVehicle);
-router.put('/:id', vehicleControllers.updateVehicle);
-router.delete('/:id', vehicleControllers.deleteVehicle)
+router.get('/:vehicleId', vehicleControllers.getSingleVehicle);
+router.put('/:vehicleId', vehicleControllers.updateVehicle);
+router.delete('/:vehicleId', vehicleControllers.deleteVehicle)
 
 
 

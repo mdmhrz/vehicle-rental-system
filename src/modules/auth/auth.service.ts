@@ -29,7 +29,7 @@ const signIn = async (email: string, password: string) => {
     // check if email exist or not
     const result = await pool.query(`SELECT * FROM users WHERE email=$1`, [email]);
 
-    console.log(result);
+    // console.log(result);
 
     if (result.rows.length === 0) {
         throw new Error("User not exist");

@@ -39,12 +39,17 @@ const signIn = async (req: Request, res: Response) => {
         const result = await authServices.signIn(email, password)
 
         if (result) {
+            const { password, ...user } = result.user;
             res.status(200).json({
                 success: true,
                 message: "Login successful",
-                data: result
+                data: {
+                    token: result.token,
+                    user
+                }
             });
-        } else {
+        }
+        else {
             res.status(401).json({
                 success: false,
                 message: "Invalid credentials"
