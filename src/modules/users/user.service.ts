@@ -8,10 +8,29 @@ const getUser = async () => {
 
 // update User
 const updateUser = async (payload: Record<string, unknown>, id: string) => {
-    const { name, email, phone, role } = payload;
-    const result = await pool.query(`UPDATE users SET name=$1, email=$2, phone=$3, role=$4 WHERE Id=$5 RETURNING *`, [name, email, phone, role, id])
+    const keys = Object.keys(payload);
+
+    if (keys.length === 0) {
+        throw new Error("No fields provided to update");
+    }
+
+    const setClause = keys
+        .map((key, index) => `${key} = $${index + 1}`)
+        .join(", ");
+
+    const values = keys.map(key => payload[key]);
+
+    const query = `
+        UPDATE users
+        SET ${setClause}
+        WHERE id = $${keys.length + 1}
+        RETURNING *;
+    `;
+
+    const result = await pool.query(query, [...values, id]);
     return result;
-}
+};
+
 
 
 

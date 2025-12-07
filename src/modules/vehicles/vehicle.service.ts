@@ -1,5 +1,7 @@
 import pool from "../../config/db";
 
+
+// create a vehicle information
 const createVehicle = async (payload: Record<string, unknown>) => {
 
     const { vehicle_name, type, registration_number, daily_rent_price, availability_status } = payload;
@@ -15,17 +17,59 @@ const createVehicle = async (payload: Record<string, unknown>) => {
     return result.rows[0]
 }
 
+// get all vehicle information by id
 const getVehicle = async () => {
     const result = await pool.query(`SELECT * FROM vehicles`);
     return result;
 }
 
+
+// get single vehicle information by id
 const getSingleVehicle = async (id: string) => {
     const result = await pool.query(`SELECT * FROM vehicles WHERE id=$1`, [id])
-    return result.rows[0]
+    return result
 }
 
 
+// update vehicle information by id
+const updateUser = async (payload: Record<string, unknown>, id: string) => {
+    const keys = Object.keys(payload);
+
+    if (keys.length === 0) {
+        throw new Error("No fields provided for update");
+    }
+
+    const setClause = keys.map((key, index) => `${key} = $${index + 1}`).join(", ");
+    const values = keys.map(key => payload[key]);
+
+    const query = `
+        UPDATE vehicles 
+        SET ${setClause} 
+        WHERE id = $${keys.length + 1}
+        RETURNING *;
+    `;
+
+    const result = await pool.query(query, [...values, id]);
+    return result;
+};
+
+
+// delete a single vehicle entry
+const deleteVehicle = async (id: string) => {
+    const result = await pool.query(`
+        DELETE FROM vehicles
+        WHERE id=$1
+        `, [id]);
+    return result
+
+}
+
+
+
 export const vehicleService = {
-    createVehicle, getVehicle, getSingleVehicle
+    createVehicle,
+    getVehicle,
+    getSingleVehicle,
+    updateUser,
+    deleteVehicle
 }
