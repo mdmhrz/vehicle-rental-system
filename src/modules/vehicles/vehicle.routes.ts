@@ -4,7 +4,7 @@ import { vehicleControllers } from './vehicle.controller';
 
 const router = Router();
 
-router.post('/', vehicleControllers.createVehicle)
+router.post('/', vehicleControllers.createVehicle);
 router.get('/', vehicleControllers.getVehicle);
 router.get('/:vehicleId', vehicleControllers.getSingleVehicle);
 router.put('/:vehicleId', vehicleControllers.updateVehicle);

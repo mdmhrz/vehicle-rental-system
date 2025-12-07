@@ -4,7 +4,9 @@ import { authRoutes } from "./modules/auth/auth.routes";
 import { userRoutes } from "./modules/users/user.routes";
 import { bookingRoutes } from "./modules/bookings/booking.routes";
 import { vehicleRoutes } from "./modules/vehicles/vehicle.routes";
+import path from "path"
 const app = express();
+
 
 
 // init DB
@@ -12,10 +14,12 @@ initDB()
 
 // Parser
 app.use(express.json());
+// Serve static files from public folder
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 // Root route
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World!')
+    res.send(path.join(__dirname, "..", "public", "index.html"))
 })
 
 
