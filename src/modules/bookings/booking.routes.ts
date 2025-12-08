@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { bookingControllers } from './booking.controller';
+import auth from '../../middleware/auth';
 
 
 const router = Router();
@@ -7,7 +8,7 @@ const router = Router();
 
 router.post('/', bookingControllers.createBooking)
 router.get('/', bookingControllers.getBookings);
-router.put('/', bookingControllers.updateBooking)
+router.put('/:bookingId', auth(), bookingControllers.updateBooking)
 
 
 
