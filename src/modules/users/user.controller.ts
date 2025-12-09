@@ -24,9 +24,10 @@ const getUser = async (req: Request, res: Response) => {
 
 // update single user
 const updateUser = async (req: Request, res: Response) => {
-
+    const user = req.user;
     try {
-        const result = await userServices.updateUser(req.body, req.params.userId as string)
+
+        const result = await userServices.updateUser(req.body, req.params.userId as string, user)
 
         if (result.rows.length === 0) {
             res.status(404).json({
@@ -46,7 +47,7 @@ const updateUser = async (req: Request, res: Response) => {
         res.status(500).json({
             success: false,
             message: error.message,
-            details: error
+            error
         })
     }
 }

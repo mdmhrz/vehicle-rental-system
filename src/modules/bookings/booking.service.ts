@@ -173,6 +173,7 @@ const updateBooking = async (bookingId: number, status: string, user: any) => {
 
 
 
+
 export const bookingService = {
     createBooking, getBooking, updateBooking
 }

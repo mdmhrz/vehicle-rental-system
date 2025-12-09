@@ -48,4 +48,13 @@ const auth = (...roles: string[]) => {
 }
 
 
+
+export const isAuthorized = (user: any, id: string) => {
+    if (user === "admin" || id == user.userId) {
+        return true
+    }
+    throw new Error("You're not allowed")
+}
+
+
 export default auth;
